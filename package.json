@@ -12,12 +12,18 @@
     "dependencies": {
         "axios": "^0.18",
         "bootstrap": "^4.0.0",
+        "chart.js": "^2.7.2",
+        "clusters": "^0.0.4",
         "font-awesome": "^4.7.0",
+        "highcharts": "^6.1.0",
         "jquery": "^3.2",
         "lodash": "^4.17.4",
         "popper.js": "^1.12",
         "vue": "^2.5.7",
-        "vue-router": "^3.0.1"
+        "vue-chartkick": "^0.3.3",
+        "vue-loading-overlay": "^2.0.4",
+        "vue-router": "^3.0.1",
+        "vuex": "^3.0.1"
     },
     "devDependencies": {
         "cross-env": "^5.1",

@@ -7,13 +7,45 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
+import Vue from 'vue'
+import Vuex from 'vuex'
+import VueRouter from 'vue-router'
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+Vue.use(Vuex)
+Vue.use(VueRouter)
+
+import user from './vuex/user'
+
+const store = new Vuex.Store({
+    modules: {
+        user
+    }
+})
+
+const router = new VueRouter({
+    routes: [
+        {
+            path: '/',
+            component: require('./components/auth/login.vue'),
+            beforeEnter: (to, from, next) => {
+                if(store.getters.getUser === null) {
+                    next()
+                }
+                next('/home')
+            }
+        },
+        {
+            path: '/home',
+            component: require('./components/home.vue'),
+            beforeEnter: (to, from, next) => {
+                if(store.getters.getUser === null) {
+                    next('/')
+                }
+                next()
+            }
+        }
+    ]
+})
 
 Vue.component(
     'passport-clients',
@@ -30,6 +62,16 @@ Vue.component(
     require('./components/passport/PersonalAccessTokens.vue')
 );
 
-const app = new Vue({
-    el: '#app'
-});
+import clusters from 'clusters'
+
+Vue.prototype.$k = clusters
+
+Vue.prototype.$axios = window.axios
+
+import VueChartkick from 'vue-chartkick'
+Vue.use(VueChartkick)
+
+new Vue({
+    store,
+    router
+}).$mount('#app');

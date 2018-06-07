@@ -25,7 +25,7 @@
                     You have not created any OAuth clients.
                 </p>
 
-                <table class="table table-borderless mb-0" v-if="clients.length > 0">
+                <table class="table mb-0" v-if="clients.length > 0">
                     <thead>
                         <tr>
                             <th>Client ID</th>
