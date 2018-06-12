@@ -15,8 +15,9 @@ class CreateMetricsTable extends Migration
     {
         Schema::create('metrics', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('type');
-            $table->dateTimeTz('date');
+            $table->dateTimeTz('from_date');
+            $table->dateTimeTz('to_date');
+            $table->integer('k');
             $table->json('data');
             $table->timestamps();
         });

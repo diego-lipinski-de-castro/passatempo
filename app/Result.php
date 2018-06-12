@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Metric extends Model
+class Result extends Model
 {
     protected $fillable = [
-        'from_date', 'to_date', 'k', 'data'
+        'c1', 'c2', 'data'
     ];
 
     protected $casts = [

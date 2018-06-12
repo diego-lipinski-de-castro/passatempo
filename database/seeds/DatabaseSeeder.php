@@ -15,21 +15,31 @@ class DatabaseSeeder extends Seeder
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
-        $this->call([
-            CountriesTableSeeder::class,
-        ]);
+        // $this->call([
+        //     CountriesTableSeeder::class,
+        // ]);
 
-        factory(App\User::class, 200)->create();
-        factory(App\Type::class, 50)->create();
-        factory(App\Item::class, 300)->create();
-        factory(App\Order::class, 2000)->create();
+        factory(App\User::class, 100)->create();
+        factory(App\Type::class, 10)->create();
+        factory(App\Item::class, 100)->create();
+        factory(App\Order::class, 1000)->create();
 
         $items = App\Item::all();
 
         App\Order::all()->each(function($order) use ($items) {
+
+            $n = rand(1, 10);
+
             $order->items()->attach(
-                $items->random(rand(1, 10))->pluck('id')->toArray()
-            );
+                $items->random($n)->pluck('id')->toArray()
+            , ['quantity' => $n]);
+
+            $order->total = $order->items->sum(function($item) {
+                return $item->price * $item->pivot->quantity;
+            });
+
+            $order->save();
+
         });
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
